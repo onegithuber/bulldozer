@@ -70,7 +70,6 @@ function _traverse_code(G, state) {
 		// TODO switch to a reducer to remove any kind of nested assignment
 		return statements.filter(s => s?.expression?.binding?.name != next_state_identifier);
 	}
-
 	let current_statements = chunks.get(state);
 
 	// Check if any block contains assignments to next_state
@@ -306,6 +305,8 @@ function find_test_expression(statements) {
 	let next_state_assign = reduce(new AssignmentsCollector(next_state_identifier), stub_script).values[0];
 
 	switch(next_state_assign.test.type) {
+		case 'CompoundAssignmentExpression':
+		case 'AssignmentExpression':
 		case 'BinaryExpression': // e.g. Ai == 19 ? 672 : 2327
 		case 'ComputedMemberExpression': // Fallback for statements such as: Me[55] ? 23173 : 1093
 		case 'StaticMemberExpression': // Fallback for statements such as: Ne.indexOf ? 14689 : 14784;

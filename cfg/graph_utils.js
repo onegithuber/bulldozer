@@ -29,7 +29,7 @@ function* dfs_back_edges(graph, start_node) {
 				if (visited.has(child_state)) {
 					yield [node, child_state];
 				} else {
-					for (let e of _dfs_back_edges_core(child_state)) {
+					 for (let e of _dfs_back_edges_core(child_state)) {
 						yield e;
 					}
 				}

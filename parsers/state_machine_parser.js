@@ -205,7 +205,22 @@ function _execute_conditionals(expr, switch_identifier, switch_value) {
 		} else {
 			return expr
 		}
-	} else { // Actual expression (might be an array of statements as well)
+	}else if (expr.type == "UnaryExpression" && expr.operator=="void"){
+		let value = _execute_conditionals(expr.operand, switch_identifier, switch_value);
+		if (value === undefined) {
+			return expr;
+		} else {
+			return value;
+		}
+	}else if(expr instanceof Array && expr.length==1){
+		let value = _execute_conditionals(expr[0], switch_identifier, switch_value);
+		if (value === undefined) {
+			return expr;
+		} else {
+			return value;
+		}
+	}
+	else { // Actual expression (might be an array of statements as well)
 		return expr
 	}
 }
